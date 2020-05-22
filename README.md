@@ -8,6 +8,12 @@ worlds, but it will work for any relatively-small set of slowly-changing files.
 
 - Follow Amazon's [Batch upload files to the cloud](https://aws.amazon.com/getting-started/hands-on/backup-to-s3-cli/) instructions to:
     - Create an S3 bucket (if you don't already have one)
+        - **NOTE TO FOUNDRY VTT USERS**: I strongly recommend that you do *not*
+          use your Foundry data S3 bucket for backups. Foundry requires that it
+          be publicly readable, which means anyone would be able to see your
+          backup data. Do you really want your dumb chat log jokes (and maybe
+          your license key, depending on what you back up) just hanging out
+          there?
     - Create an IAM user that can read/write the bucket (or grant an existing
       user read/write permissions)
     - Install and configure the `aws` tool with that user's credentials
@@ -37,4 +43,8 @@ To try it without waiting all night, copy the command from the crontab line
 (skipping past the asterisks), paste into a bash shell, then look at the log
 file.
 
-TODO: It wouldn't be hard to make this support multiple directories.
+## Possible future improvements
+
+- Support multiple directories.
+- Encrypt backups or at least give them zip passwords.
+- Add options for picking archive formats other than zip.
