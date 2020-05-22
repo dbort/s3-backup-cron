@@ -166,7 +166,10 @@ main() {
 
   LOG "Scanning existing backups in ${s3_prefix}..."
   local existing_backups_file="${work_dir}/existing-backups"
-  aws s3 ls "${s3_prefix}/${ARCHIVE_PREFIX}" > "${existing_backups_file}"
+  # The ls command will fail if the directory doesn't exist yet.
+  # Ignore failures.
+  (aws s3 ls "${s3_prefix}/${ARCHIVE_PREFIX}" || /bin/true) \
+      > "${existing_backups_file}"
   # mapfile creates a bash array from the input lines.
   local existing_backups
   mapfile -t existing_backups < "${existing_backups_file}"
